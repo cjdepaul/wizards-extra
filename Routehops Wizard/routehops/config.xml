@@ -1,0 +1,11 @@
+<configwizard>
+	<templates>
+		<template filename="routehops.cfg" />
+	</templates>
+	<plugins>
+		<plugin filename="check_route_hops.py" />
+	</plugins>
+	<logos>
+		<logo filename="routehops.png" />
+	</logos>
+</configwizard>
