@@ -1,0 +1,11 @@
+<configwizard>
+    <plugins>
+        <plugin filename="check_ncpa"/>
+    </plugins>
+    <templates>
+        <template filename="remote_plugin_ncpa.cfg"/>
+    </templates>
+    <logos>
+        <logo filename="remote_plugin_ncpa.png"/>
+    </logos>
+</configwizard>
