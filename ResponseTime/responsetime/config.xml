@@ -1,0 +1,11 @@
+<configwizard>  
+	<templates> 
+		<template filename="responsetime.cfg" /> 
+	</templates>
+	<plugins>
+		<plugin filename="check_response_time.sh" />
+	</plugins> 
+	<logos>
+		<logo filename="responsetime.jpg" /> 
+	</logos>
+</configwizard> 
