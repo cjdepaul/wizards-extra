@@ -447,7 +447,12 @@
 
         <h2 class="mt-4"><?= _('Aurora Alerts') ?></h2>
         <p><?= _('Select where you would like to track auroras or add a custom location') ?></p>
-
+        <ul class="list-group w-75">
+                <li class="list-group-item"><?= _('Latitude goes from -90 to 90 North coordinates are positive. South coordinates are negative.') ?></li>
+                <li class="list-group-item"><?= _('Longitude goes from 0 to 359 East coordinates do not need to be modified. West coordinates subtract the coordinate from 359.') ?></li>
+                <li class="list-group-item"><?= _('Ex: Lat: 67 South and Lon: 137 West will become Lat: -67 and Lon: 222') ?></li>
+        </ul>
+        <p><?=_(' ')?></p>
         <div id="aurora-locations">
 <?php
     if (!empty($aurora)) {
@@ -455,22 +460,22 @@
 ?>
             <div class="row mb-2 aurora-location">
                 <div class="col-sm-4">
-                    <label for="aurora_name_<?= $index ?>" class="form-check-label bold me-2 text-nowrap"><?= _('Service Name:') ?> <?= xi6_info_tooltip(_('The name of the service that monitors this location')) ?></label>
+                    <label for="aurora_name_<?= $index ?>" class="form-check-label bold me-2 text-nowrap"><?= _('Service Name:') ?> </label>
                     <input type="text" name="aurora[<?= $index ?>][name]" id="aurora_name_<?= $index ?>" class="form-control form-control-sm" value="<?= encode_form_val($location['name']) ?>" required>
                 </div>
                 <div class="col-sm-2">
-                    <label for="aurora_lat_<?= $index ?>" class="form-check-label bold me-2 text-nowrap"><?= _('Latitude:') ?> <?= xi6_info_tooltip(_('The latitude of your location from -90 to 90. North is positive, South is negative.')) ?></label>
+                    <label for="aurora_lat_<?= $index ?>" class="form-check-label bold me-2 text-nowrap"><?= _('Latitude:') ?> </label>
                     <input type="number" name="aurora[<?= $index ?>][lat]" id="aurora_lat_<?= $index ?>" class="form-control form-control-sm" value="<?= encode_form_val($location['lat']) ?>" min="-90" max="90" required>
                 </div>
                 <div class="col-sm-2">
-                    <label for="aurora_lon_<?= $index ?>" class="form-check-label bold me-2 text-nowrap"><?= _('Longitude:') ?> <?= xi6_info_tooltip(_('The longitude of your location from 0 to 359.\nIf west, longitude = <359 - westCoord>.\nIf east, longitude = <eastCoord>.')) ?></label>
+                    <label for="aurora_lon_<?= $index ?>" class="form-check-label bold me-2 text-nowrap"><?= _('Longitude:') ?> </label>
                     <input type="number" name="aurora[<?= $index ?>][lon]" id="aurora_lon_<?= $index ?>" class="form-control form-control-sm" value="<?= encode_form_val($location['lon']) ?>" min="0" max="359" required>
                 </div>
                 <div class="col-sm-2">
                     <label for="aurora_warning_<?= $index ?>" class="form-label"><?= _('Warning:') ?></label>
                     <div class="input-group input-group-sm me-2">
                         <span class="input-group-text">
-                            <i <?= xi6_title_tooltip(_('Warning Threshold (default=20)')) ?> class="material-symbols-outlined md-warning md-18 md-400">warning</i>
+                            <i class="material-symbols-outlined md-warning md-18 md-400">warning</i>
                         </span>
                         <input type="number" name="aurora[<?= $index ?>][warning]" id="aurora_warning_<?= $index ?>" class="form-control form-control-sm" value="<?= encode_form_val($location['warning']) ?>" min="0" max="100">
                         <i id="aurora_warning_Alert_<?= $index ?>" class="visually-hidden position-absolute top-0 start-100 translate-middle icon icon-circle color-ok icon-size-status"></i>
@@ -480,7 +485,7 @@
                     <label for="aurora_critical_<?= $index ?>" class="form-label"><?= _('Critical:') ?></label>
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">
-                            <i <?= xi6_title_tooltip(_('Critical Threshold (default=50)')) ?> class="material-symbols-outlined md-critical md-18 md-400">error</i>
+                            <i class="material-symbols-outlined md-critical md-18 md-400">error</i>
                         </span>
                         <input type="number" name="aurora[<?= $index ?>][critical]" id="aurora_critical_<?= $index ?>" class="form-control form-control-sm" value="<?= encode_form_val($location['critical']) ?>" min="0" max="100" >
                         <i id="aurora_critical_Alert_<?= $index ?>" class="visually-hidden position-absolute top-0 start-100 translate-middle icon icon-circle color-ok icon-size-status"></i>
@@ -561,22 +566,22 @@
             newLocation.className = 'row mb-2 aurora-location';
             newLocation.innerHTML = `
                 <div class="col-sm-4">
-                    <label for="aurora_name_${auroraLocationCount}" class="form-label"><?= _('Service Name:') ?> <?= xi6_info_tooltip(_('The name of the service that monitors this location')) ?></label>
+                    <label for="aurora_name_${auroraLocationCount}" class="form-label"><?= _('Service Name:') ?> </label>
                     <input type="text" name="aurora[${auroraLocationCount}][name]" id="aurora_name_${auroraLocationCount}" class="form-control form-control-sm" placeholder="<?= _('Enter Service Name') ?>" >
                 </div>
                 <div class="col-sm-2">
-                    <label for="aurora_lat_${auroraLocationCount}" class="form-label"><?= _('Latitude:') ?> <?= xi6_info_tooltip(_('The latitude of your location from -90-90\nNorth=Positive\nSouth=Negative')) ?></label>
+                    <label for="aurora_lat_${auroraLocationCount}" class="form-label"><?= _('Latitude:') ?> </label>
                     <input type="number" name="aurora[${auroraLocationCount}][lat]" id="aurora_lat_${auroraLocationCount}" class="form-control form-control-sm" min="-90" max="90" placeholder="<?= _('Latitude') ?>" >
                 </div>
                 <div class="col-sm-2">
-                    <label for="aurora_lon_${auroraLocationCount}" class="form-label"><?= _('Longitude:') ?> <?= xi6_info_tooltip(_('The longitude of your location from 0 to 359.\nIf west, longitude = <359 - westCoord>.\nIf east, longitude = <eastCoord>.')) ?></label>
+                    <label for="aurora_lon_${auroraLocationCount}" class="form-label"><?= _('Longitude:') ?> </label>
                     <input type="number" name="aurora[${auroraLocationCount}][lon]" id="aurora_lon_${auroraLocationCount}" class="form-control form-control-sm" min="0" max="359" placeholder="<?= _('Longitude') ?>" >
                 </div>
                 <div class="col-sm-2">
                     <label for="aurora_warning_${auroraLocationCount}" class="form-label"><?= _('Warning:') ?></label>
                     <div class="input-group input-group-sm me-2">
                         <span class="input-group-text">
-                            <i <?= xi6_title_tooltip(_('Warning Threshold (default=20)')) ?> class="material-symbols-outlined md-warning md-18 md-400">warning</i>
+                            <i class="material-symbols-outlined md-warning md-18 md-400">warning</i>
                         </span>
                         <input type="number" name="aurora[${auroraLocationCount}][warning]" id="aurora_warning_${auroraLocationCount}" class="form-control form-control-sm" min="0" max="100" value="20" placeholder="<?= _('Warning') ?>" >
                         <i id="aurora_warning_Alert_${auroraLocationCount}" class="visually-hidden position-absolute top-0 start-100 translate-middle icon icon-circle color-ok icon-size-status"></i>
@@ -586,7 +591,7 @@
                     <label for="aurora_critical_${auroraLocationCount}" class="form-label"><?= _('Critical:') ?></label>
                     <div class="input-group input-group-sm">
                         <span class="input-group-text">
-                            <i <?= xi6_title_tooltip(_('Critical Threshold (default=50)')) ?> class="material-symbols-outlined md-critical md-18 md-400">error</i>
+                            <i class="material-symbols-outlined md-critical md-18 md-400">error</i>
                         </span>
                         <input type="number" name="aurora[${auroraLocationCount}][critical]" id="aurora_critical_${auroraLocationCount}" class="form-control form-control-sm" min="0" max="100" value="50" placeholder="<?= _('Critical') ?>" >
                         <i id="aurora_critical_Alert_${auroraLocationCount}" class="visually-hidden position-absolute top-0 start-100 translate-middle icon icon-circle color-ok icon-size-status"></i>
