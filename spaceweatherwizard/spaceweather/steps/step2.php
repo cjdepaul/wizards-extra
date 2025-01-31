@@ -38,15 +38,15 @@
             </div>
         </div>
 
-        <h2 class="mt-4"><?= _('Space Weather Metrics') ?></h2>
-        <p><?= _('Specify which space weather metrics you would like to monitor') ?></p>
-
         <div class="row mb-2">
             <div class="col-sm-7 d-flex">
-                <button type="button" class="btn btn-primary btn-sm flex-fill me-2" onclick="selectAllCheckboxes(true)"><?= _('Select All') ?></button>
-                <button type="button" class="btn btn-primary btn-sm flex-fill" onclick="selectAllCheckboxes(false)"><?= _('Deselect All') ?></button>
+                <button type="button" class="btn btn-primary btn-sm flex-fill me-2" onclick="selectAllCheckboxes(true)"><?= _('Select All Serivces') ?></button>
+                <button type="button" class="btn btn-primary btn-sm flex-fill" onclick="selectAllCheckboxes(false)"><?= _('Deselect All Services') ?></button>
             </div>
         </div>
+
+        <h2 class="mt-4"><?= _('Space Weather Metrics') ?></h2>
+        <p><?= _('Specify which space weather metrics you would like to monitor') ?></p>
 
         <div class="row">
             <div class="col-sm-12">
