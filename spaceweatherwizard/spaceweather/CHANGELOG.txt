@@ -1,19 +1,4 @@
-2.0.1 - 03/26/2024
+1.0.0 - 02/03/2025
 ==================
-- Adjusting version -LG
+- Wizard Create
 
-2.0.0 - 12/05/2023
-==================
-- Converted to Bootstrap 5 for xi2024 -LG
-
-1.1.6 - 06/21/2021
-==================
-- Fixed serialization of user data and replaced with json_encode/json_decode -JO
-
-1.1.5 - 05/25/2020
-==================
-- Fixed minor issue with user macro expansion -SAW
-
-1.1.4 - 03/11/2019
-==================
-- Fixed autocomplete text fields for address -SK

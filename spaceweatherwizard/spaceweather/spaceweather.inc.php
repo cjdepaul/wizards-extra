@@ -19,7 +19,6 @@ function spaceweather_configwizard_init()
         CONFIGWIZARD_DISPLAYTITLE => _("Space Weather"),
         CONFIGWIZARD_FUNCTION => "spaceweather_configwizard_func",
         CONFIGWIZARD_PREVIEWIMAGE => "sun1.png",
-        CONFIGWIZARD_FILTER_GROUPS => array('network'),
         CONFIGWIZARD_REQUIRES_VERSION => 60100
     );
     register_configwizard($name, $args);
@@ -46,12 +45,12 @@ function spaceweather_configwizard_func($mode = "", $inargs = null, &$outargs = 
 
     switch ($mode) {
         case CONFIGWIZARD_MODE_GETSTAGE1HTML:
-            $address = "127.0.0.1";
-            $nodes = get_configwizard_hosts($wizard_name);
-
-            ob_start();
-            include __DIR__.'/steps/step1.php';
-            $output = ob_get_clean();
+            // Provide a simple form for the first stage
+            $output = '
+            <h5>' . _('Space Weather Wizard') . '</h5>
+            <p>' . _('This wizard will guide you through the configuration of space weather monitoring.') . '</p>
+            <input type="hidden" name="ip_address" value="127.0.0.1">
+            ';
             break;
 
         case CONFIGWIZARD_MODE_VALIDATESTAGE1DATA:
@@ -111,102 +110,27 @@ function spaceweather_configwizard_func($mode = "", $inargs = null, &$outargs = 
                 $errmsg[$errors++] = _("Invalid host name.");
             }
 
-            if (isset($services["windspeed"])) {
-                if (empty($serviceargs["windspeed"]["warning"])) {
-                    $errmsg[$errors++] = _("Warning threshold for Solar Wind Speed is required.");
-                }
-                if (empty($serviceargs["windspeed"]["critical"])) {
-                    $errmsg[$errors++] = _("Critical threshold for Solar Wind Speed is required.");
-                }
-            }
+            $required_services = [
+                "windspeed" => ["warning" => "Warning threshold for Solar Wind Speed is required.", "critical" => "Critical threshold for Solar Wind Speed is required."],
+                "density" => ["warning" => "Warning threshold for Solar Wind Density is required.", "critical" => "Critical threshold for Solar Wind Density is required."],
+                "bt" => ["warning" => "Warning threshold for Bt is required.", "critical" => "Critical threshold for Bt is required."],
+                "bz" => ["warning" => "Warning threshold for Bz is required.", "critical" => "Critical threshold for Bz is required."],
+                "gms" => ["warning" => "Warning threshold for Geomagnetic Storm is required.", "critical" => "Critical threshold for Geomagnetic Storm is required."],
+                "radio" => ["warning" => "Warning threshold for Radio Blackout is required.", "critical" => "Critical threshold for Radio Blackout is required."],
+                "solarrad" => ["warning" => "Warning threshold for Solar Radiation is required.", "critical" => "Critical threshold for Solar Radiation is required."],
+                "kp" => ["warning" => "Warning threshold for Kp index is required.", "critical" => "Critical threshold for Kp index is required."],
+                "3day" => ["warning" => "Warning threshold for Three Day Forecast is required.", "critical" => "Critical threshold for Three Day Forecast is required."],
+                "hpin" => ["warning" => "Warning threshold for Hemispheric Power Index North is required.", "critical" => "Critical threshold for Hemispheric Power Index North is required."],
+                "hpis" => ["warning" => "Warning threshold for Hemispheric Power Index South is required.", "critical" => "Critical threshold for Hemispheric Power Index South is required."]
+            ];
 
-            if (isset($services["density"])) {
-                if (empty($serviceargs["density"]["warning"])) {
-                    $errmsg[$errors++] = _("Warning threshold for Solar Wind Density is required.");
-                }
-                if (empty($serviceargs["density"]["critical"])) {
-                    $errmsg[$errors++] = _("Critical threshold for Solar Wind Density is required.");
-                }
-            }
-
-            if (isset($services["bt"])) {
-                if (empty($serviceargs["bt"]["warning"])) {
-                    $errmsg[$errors++] = _("Warning threshold for Bt is required.");
-                }
-                if (empty($serviceargs["bt"]["critical"])) {
-                    $errmsg[$errors++] = _("Critical threshold for Bt is required.");
-                }
-            }
-
-            if (isset($services["bz"])) {
-                if (empty($serviceargs["bz"]["warning"])) {
-                    $errmsg[$errors++] = _("Warning threshold for Bz is required.");
-                }
-                if (empty($serviceargs["bz"]["critical"])) {
-                    $errmsg[$errors++] = _("Critical threshold for Bz is required.");
-                }
-            }
-
-            if (isset($services["gms"])) {
-                if (empty($serviceargs["gms"]["warning"])) {
-                    $errmsg[$errors++] = _("Warning threshold for Geomagnetic Storm is required.");
-                }
-                if (empty($serviceargs["gms"]["critical"])) {
-                    $errmsg[$errors++] = _("Critical threshold for Geomagnetic Storm is required.");
-                }
-            }
-
-            if (isset($services["radio"])) {
-                if (empty($serviceargs["radio"]["warning"])) {
-                    $errmsg[$errors++] = _("Warning threshold for Radio Blackout is required.");
-                }
-                if (empty($serviceargs["radio"]["critical"])) {
-                    $errmsg[$errors++] = _("Critical threshold for Radio Blackout is required.");
-                }
-            }
-
-            if (isset($services["solarrad"])) {
-                if (empty($serviceargs["solarrad"]["warning"])) {
-                    $errmsg[$errors++] = _("Warning threshold for Solar Radiation is required.");
-                }
-                if (empty($serviceargs["solarrad"]["critical"])) {
-                    $errmsg[$errors++] = _("Critical threshold for Solar Radiation is required.");
-                }
-            }
-
-            if (isset($services["kp"])) {
-                if (empty($serviceargs["kp"]["warning"])) {
-                    $errmsg[$errors++] = _("Warning threshold for Kp index is required.");
-                }
-                if (empty($serviceargs["kp"]["critical"])) {
-                    $errmsg[$errors++] = _("Critical threshold for Kp index is required.");
-                }
-            }
-
-            if (isset($services["3day"])) {
-                if (empty($serviceargs["3day"]["warning"])) {
-                    $errmsg[$errors++] = _("Warning threshold for Three Day Forecast is required.");
-                }
-                if (empty($serviceargs["3day"]["critical"])) {
-                    $errmsg[$errors++] = _("Critical threshold for Three Day Forecast is required.");
-                }
-            }
-
-            if (isset($services["hpin"])) {
-                if (empty($serviceargs["hpin"]["warning"])) {
-                    $errmsg[$errors++] = _("Warning threshold for Hemispheric Power Index North is required.");
-                }
-                if (empty($serviceargs["hpin"]["critical"])) {
-                    $errmsg[$errors++] = _("Critical threshold for Hemispheric Power Index North is required.");
-                }
-            }
-
-            if (isset($services["hpis"])) {
-                if (empty($serviceargs["hpis"]["warning"])) {
-                    $errmsg[$errors++] = _("Warning threshold for Hemispheric Power Index South is required.");
-                }
-                if (empty($serviceargs["hpis"]["critical"])) {
-                    $errmsg[$errors++] = _("Critical threshold for Hemispheric Power Index South is required.");
+            foreach ($required_services as $service => $thresholds) {
+                if (isset($services[$service])) {
+                    foreach ($thresholds as $threshold => $message) {
+                        if (empty($serviceargs[$service][$threshold])) {
+                            $errmsg[$errors++] = _($message);
+                        }
+                    }
                 }
             }
 
@@ -221,11 +145,11 @@ function spaceweather_configwizard_func($mode = "", $inargs = null, &$outargs = 
                     if (empty($location["lon"]) || !is_numeric($location["lon"]) || $location["lon"] < 0 || $location["lon"] > 359) {
                         $errmsg[$errors++] = _("Valid longitude for Aurora is required.");
                     }
-                    if (empty($location["warning"])) {
-                        $errmsg[$errors++] = _("Warning threshold for Aurora is required.");
+                    if (empty($location["warning"]) || !is_numeric($location["warning"])) {
+                        $errmsg[$errors++] = _("Warning threshold for Aurora is required and must be an integer.");
                     }
-                    if (empty($location["critical"])) {
-                        $errmsg[$errors++] = _("Critical threshold for Aurora is required.");
+                    if (empty($location["critical"]) || !is_numeric($location["critical"])) {
+                        $errmsg[$errors++] = _("Critical threshold for Aurora is required and must be an integer.");
                     }
                 }
             }
@@ -285,6 +209,25 @@ function spaceweather_configwizard_func($mode = "", $inargs = null, &$outargs = 
             $serviceargs = json_decode(base64_decode($serviceargs_serial), true);
             $aurora = json_decode(base64_decode($aurora_serial), true);
 
+            // Sanitize inputs
+            $hostname = encode_form_val($hostname);
+            $address = encode_form_val($address);
+            foreach ($services as $key => $value) {
+                $services[$key] = encode_form_val($value);
+            }
+            foreach ($serviceargs as $key => $args) {
+                foreach ($args as $arg_key => $arg_value) {
+                    $serviceargs[$key][$arg_key] = filter_var($arg_value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                }
+            }
+            foreach ($aurora as $key => $location) {
+                $aurora[$key]['name'] = filter_var($location['name'], FILTER_SANITIZE_STRING);
+                $aurora[$key]['lat'] = filter_var($location['lat'], FILTER_VALIDATE_INT);
+                $aurora[$key]['lon'] = filter_var($location['lon'], FILTER_VALIDATE_INT);
+                $aurora[$key]['warning'] = filter_var($location['warning'], FILTER_SANITIZE_NUMBER_INT);
+                $aurora[$key]['critical'] = filter_var($location['critical'], FILTER_SANITIZE_NUMBER_INT);
+            }
+
             // Debug: Print services and serviceargs
             error_log("Services: " . print_r($services, true));
             error_log("Service Args: " . print_r($serviceargs, true));
@@ -308,162 +251,51 @@ function spaceweather_configwizard_func($mode = "", $inargs = null, &$outargs = 
                 "_xiwizard" => $wizard_name,
             );
 
+            $service_definitions = [
+                "windspeed" => ["description" => "Solar Wind Speed", "command" => "check_space_weather!-w"],
+                "density" => ["description" => "Solar Wind Density", "command" => "check_space_weather!-d"],
+                "bt" => ["description" => "Bt", "command" => "check_space_weather!-bt"],
+                "bz" => ["description" => "Bz", "command" => "check_space_weather!-bz"],
+                "gms" => ["description" => "Geomagnetic Storm", "command" => "check_space_weather!-g"],
+                "radio" => ["description" => "Radio Blackout", "command" => "check_space_weather!-r"],
+                "solarrad" => ["description" => "Solar Radiation", "command" => "check_space_weather!-s"],
+                "kp" => ["description" => "Kp Index", "command" => "check_space_weather!-k"],
+                "3day" => ["description" => "Three Day Forecast", "command" => "check_space_weather!-3d"],
+                "hpin" => ["description" => "Hemispheric Power Index North", "command" => "check_space_weather!-hpiN"],
+                "hpis" => ["description" => "Hemispheric Power Index South", "command" => "check_space_weather!-hpiS"]
+            ];
+
             foreach ($services as $svc => $svcstate) {
-                if ($svcstate) {
-                    switch ($svc) {
-                        case "windspeed":
-                            $objs[] = array(
-                                "type" => OBJECTTYPE_SERVICE,
-                                "host_name" => $hostname,
-                                "service_description" => "Solar Wind Speed",
-                                "use" => "xiwizard_solar_windspeed_service",
-                                "check_command" => "check_space_weather!-w " . " !-W " . $serviceargs["windspeed"]["warning"] . "!-C " . $serviceargs["windspeed"]["critical"], 
-                                "check_interval" => 2,
-                                "_xiwizard" => $wizard_name,
-                            );
-                            break;
-                        case "density":
-                            $objs[] = array(
-                                "type" => OBJECTTYPE_SERVICE,
-                                "host_name" => $hostname,
-                                "service_description" => "Solar Wind Density",
-                                "use" => "xiwizard_generic_service",
-                                "check_command" => "check_space_weather!-d " . " !-W " . $serviceargs["density"]["warning"] . "!-C " . $serviceargs["density"]["critical"], 
-                                "check_interval" => 2,
-                                "_xiwizard" => $wizard_name,
-                            );
-                            break;
-                        case "bt":
-                            $objs[] = array(
-                                "type" => OBJECTTYPE_SERVICE,
-                                "host_name" => $hostname,
-                                "service_description" => "Bt",
-                                "use" => "xiwizard_generic_service",
-                                "check_command" => "check_space_weather!-bt " . " !-W " . $serviceargs["bt"]["warning"] . "!-C " . $serviceargs["bt"]["critical"], 
-                                "check_interval" => 2,
-                                "_xiwizard" => $wizard_name,
-                            );
-                            break;
-                        case "bz":
-                            $objs[] = array(
-                                "type" => OBJECTTYPE_SERVICE,
-                                "host_name" => $hostname,
-                                "service_description" => "Bz",
-                                "use" => "xiwizard_generic_service",
-                                "check_command" => "check_space_weather!-bz " . " !-W " . $serviceargs["bz"]["warning"] . "!-C " . $serviceargs["bz"]["critical"], 
-                                "check_interval" => 2,
-                                "_xiwizard" => $wizard_name,
-                            );
-                            break;
-                        case "coronalmass":
-                            $objs[] = array(
-                                "type" => OBJECTTYPE_SERVICE,
-                                "host_name" => $hostname,
-                                "service_description" => "Coronal Mass Ejection",
-                                "use" => "xiwizard_generic_service",
-                                "check_command" => "check_space_weather!-c",
-                                "check_interval" => 2,
-                                "_xiwizard" => $wizard_name,
-                            );
-                            break;
-                        case "solarflare":
-                            $objs[] = array(
-                                "type" => OBJECTTYPE_SERVICE,
-                                "host_name" => $hostname,
-                                "service_description" => "Solar Flare",
-                                "use" => "xiwizard_generic_service",
-                                "check_command" => "check_space_weather!-f",
-                                "check_interval" => 2,
-                                "_xiwizard" => $wizard_name,
-                            );
-                            break;
-                        
-                        case "gms":
-                        $objs[] = array(
-                            "type" => OBJECTTYPE_SERVICE,
-                            "host_name" => $hostname,
-                            "service_description" => "Geomagnetic Storm",
-                            "use" => "xiwizard_generic_service",
-                            "check_command" => "check_space_weather!-g " . " !-W " . $serviceargs["gms"]["warning"] . "!-C " . $serviceargs["gms"]["critical"], 
-                            "check_interval" => 2,
-                            "_xiwizard" => $wizard_name,
-                        );
-                        break;
+                if ($svcstate && isset($service_definitions[$svc])) {
+                    $objs[] = array(
+                        "type" => OBJECTTYPE_SERVICE,
+                        "host_name" => $hostname,
+                        "service_description" => $service_definitions[$svc]["description"],
+                        "use" => "xiwizard_generic_service",
+                        "check_command" => $service_definitions[$svc]["command"] . " -W " . $serviceargs[$svc]["warning"] . " -C " . $serviceargs[$svc]["critical"],
+                        "check_interval" => 2,
+                        "_xiwizard" => $wizard_name,
+                    );
+                }
+            }
 
+            // Handle services without -W or -C options
+            $special_services = [
+                "coronalmass" => ["description" => "Coronal Mass Ejection", "command" => "check_space_weather!-c"],
+                "solarflare" => ["description" => "Solar Flare", "command" => "check_space_weather!-f"]
+            ];
 
-                        case "radio":
-                            $objs[] = array(
-                                "type" => OBJECTTYPE_SERVICE,
-                                "host_name" => $hostname,
-                                "service_description" => "Radio Blackout",
-                                "use" => "xiwizard_generic_service",
-                                "check_command" => "check_space_weather!-r " . " !-W " . $serviceargs["radio"]["warning"] . "!-C " . $serviceargs["radio"]["critical"], 
-                                "check_interval" => 2,
-                                "_xiwizard" => $wizard_name,
-                            );
-                            break;
-
-                        case "solarrad":
-                        $objs[] = array(
-                            "type" => OBJECTTYPE_SERVICE,
-                            "host_name" => $hostname,
-                            "service_description" => "Solar Radiation",
-                            "use" => "xiwizard_generic_service",
-                            "check_command" => "check_space_weather!-s " . " !-W " . $serviceargs["solarrad"]["warning"] . "!-C " . $serviceargs["solarrad"]["critical"], 
-                            "check_interval" => 2,
-                            "_xiwizard" => $wizard_name,
-                        );
-                        break;
-
-                        case "kp":
-                            $objs[] = array(
-                                "type" => OBJECTTYPE_SERVICE,
-                                "host_name" => $hostname,
-                                "service_description" => "Kp Index",
-                                "use" => "xiwizard_generic_service",
-                                "check_command" => "check_space_weather!-k " . " !-W " . $serviceargs["kp"]["warning"] . "!-C " . $serviceargs["kp"]["critical"], 
-                                "check_interval" => 2,
-                                "_xiwizard" => $wizard_name,
-                            );
-                            break;
-
-                        case "3day":
-                        $objs[] = array(
-                            "type" => OBJECTTYPE_SERVICE,
-                            "host_name" => $hostname,
-                            "service_description" => "Three Day Forecast",
-                            "use" => "xiwizard_generic_service",
-                            "check_command" => "check_space_weather!-3d " . " !-W " . $serviceargs["3day"]["warning"] . "!-C " . $serviceargs["3day"]["critical"], 
-                            "check_interval" => 2,
-                            "_xiwizard" => $wizard_name,
-                        );
-                        break;
-
-                        case "hpin":
-                            $objs[] = array(
-                                "type" => OBJECTTYPE_SERVICE,
-                                "host_name" => $hostname,
-                                "service_description" => "Hemispheric Power Index North",
-                                "use" => "xiwizard_generic_service",
-                                "check_command" => "check_space_weather!-hpiN " . " !-W " . $serviceargs["hpin"]["warning"] . "!-C " . $serviceargs["hpin"]["critical"], 
-                                "check_interval" => 2,
-                                "_xiwizard" => $wizard_name,
-                            );
-                            break;
-                        
-                        case "hpis":
-                            $objs[] = array(
-                                "type" => OBJECTTYPE_SERVICE,
-                                "host_name" => $hostname,
-                                "service_description" => "Hemispheric Power Index South",
-                                "use" => "xiwizard_generic_service",
-                                "check_command" => "check_space_weather!-hpiS " . " !-W " . $serviceargs["hpis"]["warning"] . "!-C " . $serviceargs["hpis"]["critical"], 
-                                "check_interval" => 2,
-                                "_xiwizard" => $wizard_name,
-                            );
-                            break;
-
-                    }
+            foreach ($services as $svc => $svcstate) {
+                if ($svcstate && isset($special_services[$svc])) {
+                    $objs[] = array(
+                        "type" => OBJECTTYPE_SERVICE,
+                        "host_name" => $hostname,
+                        "service_description" => $special_services[$svc]["description"],
+                        "use" => "xiwizard_generic_service",
+                        "check_command" => $special_services[$svc]["command"],
+                        "check_interval" => 2,
+                        "_xiwizard" => $wizard_name,
+                    );
                 }
             }
 

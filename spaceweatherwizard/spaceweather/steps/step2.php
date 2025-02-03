@@ -17,16 +17,6 @@
 
         <div class="row mb-2">
             <div class="col-sm-6">
-                <label for="ip_address" class="form-label"><?= _('Local Host:') ?> </label>
-                <div class="input-group position-relative">
-                    <input type="text" name="ip_address" id="ip_address" value="<?= encode_form_val($address) ?>" class="form-control form-control-sm monitor rounded" placeholder="<?= _("Local Host:") ?>" disabled="on">
-                    <i id="ip_address_Alert" class="visually-hidden position-absolute top-0 start-100 translate-middle icon icon-circle color-ok icon-size-status"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mb-2">
-            <div class="col-sm-6">
                 <label for="hostname" class="form-label form-item-required"><?= _('Host Name:') ?> <?= xi6_info_tooltip(_('Name you would like to associate with this host')) ?></label>
                 <div class="input-group position-relative">
                     <input type="text" name="hostname" id="hostname" value="<?= encode_form_val($hostname) ?>" class="form-control form-control-sm monitor rounded" placeholder="<?= _("Enter Host Name:") ?>" >
@@ -38,13 +28,6 @@
             </div>
         </div>
 
-        <div class="row mb-2">
-            <div class="col-sm-7 d-flex">
-                <button type="button" class="btn btn-primary btn-sm flex-fill me-2" onclick="selectAllCheckboxes(true)"><?= _('Select All Serivces') ?></button>
-                <button type="button" class="btn btn-primary btn-sm flex-fill" onclick="selectAllCheckboxes(false)"><?= _('Deselect All Services') ?></button>
-            </div>
-        </div>
-
         <h2 class="mt-4"><?= _('Space Weather Metrics') ?></h2>
         <p><?= _('Specify which space weather metrics you would like to monitor') ?></p>
 
@@ -52,7 +35,18 @@
             <div class="col-sm-12">
                 <fieldset class="row g-2 mb-1 wz-fieldset align-items-center">
                     <div class="form-check col-sm-2 d-flex align-items-center">
-                        <input type="checkbox" id="solarwindspeed" class="form-check-input me-2" name="services[windspeed]" <?= isset($services["windspeed"]) && $services["windspeed"] ? 'checked="checked"' : '' ?>>
+                        <input type="checkbox" id="select_all_metrics" class="form-check-input me-2" onclick="selectAllInSection('metrics', this.checked)">
+                        <label for="select_all_metrics" class="form-check-label bold me-2 text-nowrap"><?= _('Select All Metrics') ?></label>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center metrics">
+                    <div class="form-check col-sm-2 d-flex align-items-center">
+                        <input type="checkbox" id="solarwindspeed" class="form-check-input me-2" name="services[windspeed]" <?= isset($services["windspeed"]) && $services["windspeed"] ? 'checked="checked"' : '' ?> onchange="updateSelectAll('metrics')">
                         <label for="solarwindspeed" class="form-check-label bold me-2 text-nowrap"><?= _('Solar Wind Speed') ?> <?= xi6_info_tooltip(_("Monitors the current solar wind speed")) ?></label>
                     </div>
                     <div class="col-sm-6 offset-sm-2">
@@ -83,9 +77,9 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center">
+                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center metrics">
                     <div class="form-check col-sm-2 d-flex align-items-center">
-                        <input type="checkbox" id="solardensity" class="form-check-input me-2" name="services[density]" <?= isset($services["density"]) && $services["density"] ? 'checked="checked"' : '' ?>>
+                        <input type="checkbox" id="solardensity" class="form-check-input me-2" name="services[density]" <?= isset($services["density"]) && $services["density"] ? 'checked="checked"' : '' ?> onchange="updateSelectAll('metrics')">
                         <label for="solardensity" class="form-check-label bold me-2 text-nowrap"><?= _('Solar Wind Density') ?> <?= xi6_info_tooltip(_("Monitors the current solar wind density")) ?></label>
                     </div>
                     <div class="col-sm-6 offset-sm-2">
@@ -116,9 +110,9 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center">
+                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center metrics">
                     <div class="form-check col-sm-2 d-flex align-items-center">
-                        <input type="checkbox" id="bt" class="form-check-input me-2" name="services[bt]" <?= isset($services["bt"]) && $services["bt"] ? 'checked="checked"' : '' ?>>
+                        <input type="checkbox" id="bt" class="form-check-input me-2" name="services[bt]" <?= isset($services["bt"]) && $services["bt"] ? 'checked="checked"' : '' ?> onchange="updateSelectAll('metrics')">
                         <label for="bt" class="form-check-label bold me-2 text-nowrap"><?= _('Bt') ?> <?= xi6_info_tooltip(_("Monitors the current Interplanetary Magnetic Field strength")) ?></label>
                     </div>
                     <div class="col-sm-6 offset-sm-2">
@@ -149,9 +143,9 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center">
+                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center metrics">
                     <div class="form-check col-sm-2 d-flex align-items-center">
-                        <input type="checkbox" id="bz" class="form-check-input me-2" name="services[bz]" <?= isset($services["bz"]) && $services["bz"] ? 'checked="checked"' : '' ?>>
+                        <input type="checkbox" id="bz" class="form-check-input me-2" name="services[bz]" <?= isset($services["bz"]) && $services["bz"] ? 'checked="checked"' : '' ?> onchange="updateSelectAll('metrics')">
                         <label for="bz" class="form-check-label bold me-2 text-nowrap"><?= _('Bz') ?> <?= xi6_info_tooltip(_("Monitors the north-south component of the interplanetary magnetic field")) ?></label>
                     </div>
                     <div class="col-sm-6 offset-sm-2">
@@ -182,9 +176,9 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center">
+                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center metrics">
                     <div class="form-check col-sm-2 d-flex align-items-center">
-                        <input type="checkbox" id="kp" class="form-check-input me-2" name="services[kp]" <?= isset($services["kp"]) && $services["kp"] ? 'checked="checked"' : '' ?>>
+                        <input type="checkbox" id="kp" class="form-check-input me-2" name="services[kp]" <?= isset($services["kp"]) && $services["kp"] ? 'checked="checked"' : '' ?> onchange="updateSelectAll('metrics')">
                         <label for="kp" class="form-check-label bold me-2 text-nowrap"><?= _('Kp Index') ?> <?= xi6_info_tooltip(_("Monitors the current Kp Index")) ?></label>
                     </div>
                     <div class="col-sm-6 offset-sm-2">
@@ -215,9 +209,9 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center">
+                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center metrics">
                     <div class="form-check col-sm-2 d-flex align-items-center">
-                        <input type="checkbox" id="3day" class="form-check-input me-2" name="services[3day]" <?= isset($services["3day"]) && $services["3day"] ? 'checked="checked"' : '' ?>>
+                        <input type="checkbox" id="3day" class="form-check-input me-2" name="services[3day]" <?= isset($services["3day"]) && $services["3day"] ? 'checked="checked"' : '' ?> onchange="updateSelectAll('metrics')">
                         <label for="3day" class="form-check-label bold me-2 text-nowrap"><?= _('Three Day Forecast') ?> <?= xi6_info_tooltip(_("Monitors the highest projected Kp index in the next three days")) ?></label>
                     </div>
                     <div class="col-sm-6 offset-sm-2">
@@ -248,9 +242,9 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center">
+                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center metrics">
                     <div class="form-check col-sm-2 d-flex align-items-center">
-                        <input type="checkbox" id="hpin" class="form-check-input me-2" name="services[hpin]" <?= isset($services["hpin"]) && $services["hpin"] ? 'checked="checked"' : '' ?>>
+                        <input type="checkbox" id="hpin" class="form-check-input me-2" name="services[hpin]" <?= isset($services["hpin"]) && $services["hpin"] ? 'checked="checked"' : '' ?> onchange="updateSelectAll('metrics')">
                         <label for="hpin" class="form-check-label bold me-2 text-nowrap"><?= _('Hemispheric Power Index North') ?> <?= xi6_info_tooltip(_("Monitors the Hemispheric Power Index in the Northern Hemisphere")) ?></label>
                     </div>
                     <div class="col-sm-6 offset-sm-2">
@@ -281,9 +275,9 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center">
+                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center metrics">
                     <div class="form-check col-sm-2 d-flex align-items-center">
-                        <input type="checkbox" id="hpis" class="form-check-input me-2" name="services[hpis]" <?= isset($services["hpis"]) && $services["hpis"] ? 'checked="checked"' : '' ?>>
+                        <input type="checkbox" id="hpis" class="form-check-input me-2" name="services[hpis]" <?= isset($services["hpis"]) && $services["hpis"] ? 'checked="checked"' : '' ?> onchange="updateSelectAll('metrics')">
                         <label for="hpis" class="form-check-label bold me-2 text-nowrap"><?= _('Hemispheric Power Index North') ?> <?= xi6_info_tooltip(_("Monitors the Hemispheric Power Index in the Southern Hemisphere")) ?></label>
                     </div>
                     <div class="col-sm-6 offset-sm-2">
@@ -320,7 +314,18 @@
             <div class="col-sm-12">
                 <fieldset class="row g-2 mb-1 wz-fieldset align-items-center">
                     <div class="form-check col-sm-2 d-flex align-items-center">
-                        <input type="checkbox" id="coronalmass" class="form-check-input me-2" name="services[coronalmass]" <?= isset($services["coronalmass"]) && $services["coronalmass"] ? 'checked="checked"' : '' ?>>
+                        <input type="checkbox" id="select_all_detection" class="form-check-input me-2" onclick="selectAllInSection('detection', this.checked)">
+                        <label for="select_all_detection" class="form-check-label bold me-2 text-nowrap"><?= _('Select All Detection Alerts') ?></label>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center detection">
+                    <div class="form-check col-sm-2 d-flex align-items-center">
+                        <input type="checkbox" id="coronalmass" class="form-check-input me-2" name="services[coronalmass]" <?= isset($services["coronalmass"]) && $services["coronalmass"] ? 'checked="checked"' : '' ?> onchange="updateSelectAll('detection')">
                         <label for="coronalmass" class="form-check-label bold me-2 text-nowrap"><?= _('Coronal Mass Ejection') ?> <?= xi6_info_tooltip(_("Monitors for coronal mass ejectionsn\nEarthBound=critical\nGlancingBlow=warning")) ?></label>
                     </div>
                 </fieldset>
@@ -329,9 +334,9 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center">
+                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center detection">
                     <div class="form-check col-sm-2 d-flex align-items-center">
-                        <input type="checkbox" id="solarflare" class="form-check-input me-2" name="services[solarflare]" <?= isset($services["solarflare"]) && $services["solarflare"] ? 'checked="checked"' : '' ?>>
+                        <input type="checkbox" id="solarflare" class="form-check-input me-2" name="services[solarflare]" <?= isset($services["solarflare"]) && $services["solarflare"] ? 'checked="checked"' : '' ?> onchange="updateSelectAll('detection')">
                         <label for="solarflare" class="form-check-label bold me-2 text-nowrap"><?= _('Solar Flare') ?> <?= xi6_info_tooltip(_("Monitors for solar flares\nXclass=critical\nMclass=warning")) ?></label>
                     </div>
                 </fieldset>
@@ -348,7 +353,18 @@
             <div class="col-sm-12">
                 <fieldset class="row g-2 mb-1 wz-fieldset align-items-center">
                     <div class="form-check col-sm-2 d-flex align-items-center">
-                        <input type="checkbox" id="gms" class="form-check-input me-2" name="services[gms]" <?= isset($services["gms"]) && $services["gms"] ? 'checked="checked"' : '' ?>>
+                        <input type="checkbox" id="select_all_noaa" class="form-check-input me-2" onclick="selectAllInSection('noaa', this.checked)">
+                        <label for="select_all_noaa" class="form-check-label bold me-2 text-nowrap"><?= _('Select All NOAA Alerts') ?></label>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center noaa">
+                    <div class="form-check col-sm-2 d-flex align-items-center">
+                        <input type="checkbox" id="gms" class="form-check-input me-2" name="services[gms]" <?= isset($services["gms"]) && $services["gms"] ? 'checked="checked"' : '' ?> onchange="updateSelectAll('noaa')">
                         <label for="gms" class="form-check-label bold me-2 text-nowrap"><?= _('Geomagnetic Storm') ?> <?= xi6_info_tooltip(_("Monitors the current Geomagnetic Storm level")) ?></label>
                     </div>
                     <div class="col-sm-6 offset-sm-2">
@@ -379,9 +395,9 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center">
+                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center noaa">
                     <div class="form-check col-sm-2 d-flex align-items-center">
-                        <input type="checkbox" id="radio" class="form-check-input me-2" name="services[radio]" <?= isset($services["radio"]) && $services["radio"] ? 'checked="checked"' : '' ?>>
+                        <input type="checkbox" id="radio" class="form-check-input me-2" name="services[radio]" <?= isset($services["radio"]) && $services["radio"] ? 'checked="checked"' : '' ?> onchange="updateSelectAll('noaa')">
                         <label for="radio" class="form-check-label bold me-2 text-nowrap"><?= _('Radio Blackout') ?> <?= xi6_info_tooltip(_("Monitors the current Radio Blackout level")) ?></label>
                     </div>
                     <div class="col-sm-6 offset-sm-2">
@@ -412,9 +428,9 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center">
+                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center noaa">
                     <div class="form-check col-sm-2 d-flex align-items-center">
-                        <input type="checkbox" id="solarrad" class="form-check-input me-2" name="services[solarrad]" <?= isset($services["solarrad"]) && $services["solarrad"] ? 'checked="checked"' : '' ?>>
+                        <input type="checkbox" id="solarrad" class="form-check-input me-2" name="services[solarrad]" <?= isset($services["solarrad"]) && $services["solarrad"] ? 'checked="checked"' : '' ?> onchange="updateSelectAll('noaa')">
                         <label for="solarrad" class="form-check-label bold me-2 text-nowrap"><?= _('Solar Radiation') ?> <?= xi6_info_tooltip(_("Monitors the current Solar Radiation level")) ?></label>
                     </div>
                     <div class="col-sm-6 offset-sm-2">
@@ -621,10 +637,17 @@
             }
         }
 
-        function selectAllCheckboxes(select) {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        function selectAllInSection(sectionClass, select) {
+            const checkboxes = document.querySelectorAll(`.${sectionClass} input[type="checkbox"]`);
             checkboxes.forEach(checkbox => {
                 checkbox.checked = select;
             });
+        }
+
+        function updateSelectAll(sectionClass) {
+            const checkboxes = document.querySelectorAll(`.${sectionClass} input[type="checkbox"]`);
+            const selectAllCheckbox = document.getElementById(`select_all_${sectionClass}`);
+            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+            selectAllCheckbox.checked = allChecked;
         }
     </script>
