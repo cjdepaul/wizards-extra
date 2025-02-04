@@ -507,7 +507,7 @@
                         <i id="aurora_critical_Alert_<?= $index ?>" class="visually-hidden position-absolute top-0 start-100 translate-middle icon icon-circle color-ok icon-size-status"></i>
                     </div>
                 </div>
-                <div class="col-sm-2 mt-4">
+                <div class="col-sm-2 mt-2">
                     <button type="button" class="btn btn-primary btn-sm" onclick="removeAuroraLocation(<?= $index ?>)"><?= _('Remove') ?></button>
                 </div>
             </div>
@@ -519,7 +519,7 @@
 
         <button type="button" class="btn btn-primary" onclick="addAuroraLocation()"><?= _('Add Location') ?></button>
 
-        <div class="row mt-4">
+        <div class="row mt-2">
             <div class="col-sm-4">
                 <label for="preset_locations" class="form-label"><?= _('Preset Locations:') ?></label>
                 <select id="preset_locations" class="form-select form-select-sm" onchange="fillAuroraLocation()">
@@ -613,7 +613,7 @@
                         <i id="aurora_critical_Alert_${auroraLocationCount}" class="visually-hidden position-absolute top-0 start-100 translate-middle icon icon-circle color-ok icon-size-status"></i>
                     </div>
                 </div>
-                <div class="col-sm-2 mt-4">
+                <div class="col-sm-2 mt-2">
                     <button type="button" class="btn btn-primary btn-sm" onclick="removeAuroraLocation(${auroraLocationCount})"><?= _('Remove') ?></button>
                 </div>
             `;
