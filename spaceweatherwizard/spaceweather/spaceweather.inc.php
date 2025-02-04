@@ -53,27 +53,8 @@ function spaceweather_configwizard_func($mode = "", $inargs = null, &$outargs = 
             ';
             break;
 
-        case CONFIGWIZARD_MODE_VALIDATESTAGE1DATA:
-            $address = "127.0.0.1";
-            $address = nagiosccm_replace_user_macros($address);
-
-            $errors = 0;
-            $errmsg = array();
-
-            if (have_value($address) == false) {
-                $errmsg[$errors++] = _("No address specified.");
-            } else if (!valid_ip($address)) {
-                $errmsg[$errors++] = _("Invalid IP address.");
-            }
-
-            if ($errors > 0) {
-                $outargs[CONFIGWIZARD_ERROR_MESSAGES] = $errmsg;
-                $result = 1;
-            }
-            break;
-
         case CONFIGWIZARD_MODE_GETSTAGE2HTML:
-            $address = "127.0.0.1";
+        
             $hostname = grab_array_var($inargs, "hostname", @gethostbyaddr($address));
             $services_serial = grab_array_var($inargs, "services_serial", "");
             $serviceargs_serial = grab_array_var($inargs, "serviceargs_serial", "");
@@ -95,7 +76,7 @@ function spaceweather_configwizard_func($mode = "", $inargs = null, &$outargs = 
             break;
 
         case CONFIGWIZARD_MODE_VALIDATESTAGE2DATA:
-            $address = "127.0.0.1";
+        
             $hostname = grab_array_var($inargs, "hostname");
             $hostname = nagiosccm_replace_user_macros($hostname);
 
@@ -159,7 +140,7 @@ function spaceweather_configwizard_func($mode = "", $inargs = null, &$outargs = 
                 $result = 1;
             } else {
                 $outargs[CONFIGWIZARD_PASSBACK_DATA] = array(
-                    "hostname" => $hostname,
+                    "hostname" => filter_var($hostname, FILTER_SANITIZE_FULL_SPECIAL_CHARS),
                     "services" => $services,
                     "serviceargs" => $serviceargs,
                     "aurora" => $aurora
@@ -171,7 +152,6 @@ function spaceweather_configwizard_func($mode = "", $inargs = null, &$outargs = 
             break;
 
         case CONFIGWIZARD_MODE_GETSTAGE3HTML:
-            $address = "127.0.0.1";
             $hostname = grab_array_var($inargs, "hostname");
             $services = grab_array_var($inargs, "services", array());
             $serviceargs = grab_array_var($inargs, "serviceargs", array());
@@ -210,10 +190,10 @@ function spaceweather_configwizard_func($mode = "", $inargs = null, &$outargs = 
             $aurora = json_decode(base64_decode($aurora_serial), true);
 
             // Sanitize inputs
-            $hostname = encode_form_val($hostname);
+            $hostname = filter_var($hostname, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $address = encode_form_val($address);
             foreach ($services as $key => $value) {
-                $services[$key] = encode_form_val($value);
+                $services[$key] = filter_var($value, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             }
             foreach ($serviceargs as $key => $args) {
                 foreach ($args as $arg_key => $arg_value) {
@@ -221,7 +201,7 @@ function spaceweather_configwizard_func($mode = "", $inargs = null, &$outargs = 
                 }
             }
             foreach ($aurora as $key => $location) {
-                $aurora[$key]['name'] = filter_var($location['name'], FILTER_SANITIZE_STRING);
+                $aurora[$key]['name'] = filter_var($location['name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $aurora[$key]['lat'] = filter_var($location['lat'], FILTER_VALIDATE_INT);
                 $aurora[$key]['lon'] = filter_var($location['lon'], FILTER_VALIDATE_INT);
                 $aurora[$key]['warning'] = filter_var($location['warning'], FILTER_SANITIZE_NUMBER_INT);
@@ -304,7 +284,7 @@ function spaceweather_configwizard_func($mode = "", $inargs = null, &$outargs = 
                     $objs[] = array(
                         "type" => OBJECTTYPE_SERVICE,
                         "host_name" => $hostname,
-                        "service_description" => $location["name"],
+                        "service_description" => filter_var($location["name"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
                         "use" => "xiwizard_generic_service",
                         "check_command" => "check_space_weather!-p -lat " . $location["lat"] . " -lon " . $location["lon"] . " -W " . $location["warning"] . " -C " . $location["critical"],
                         "check_interval" => 2,
