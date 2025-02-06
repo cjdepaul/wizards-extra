@@ -1,0 +1,11 @@
+<configwizard>
+	<templates>
+		<template filename="spaceweather.cfg" />
+	</templates>
+	<plugins>
+		<plugin filename="check_space_weather.py" />
+	</plugins>
+	<logos>
+		<logo filename="sun1.png" />
+	</logos>
+</configwizard>
