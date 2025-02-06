@@ -19,7 +19,7 @@ yesterday_day = time.strftime("%d", time.gmtime(yesterday_time))
 
 
 def get_density():
-    url = "https://services.swpc.noaa.gov/products/solar-wind/plasma-2-hour.json"  # Replace with the actual URL
+    url = "https://services.swpc.noaa.gov/products/solar-wind/plasma-2-hour.json" 
     try:
         response = requests.get(url)
         response.raise_for_status()  # Check if the request was successful
@@ -38,7 +38,7 @@ def get_density():
     return None
 
 def check_wind_speed():
-    url = "https://services.swpc.noaa.gov/products/solar-wind/plasma-2-hour.json"  # Replace with the actual URL
+    url = "https://services.swpc.noaa.gov/products/solar-wind/plasma-2-hour.json" 
     try:
         response = requests.get(url)
         response.raise_for_status()  # Check if the request was successful
@@ -73,7 +73,7 @@ def get_solar_flare_X(): #locates the strongest x-class flare in the last 24-48 
     return x_class_flares
 
 def get_geo_mag_storm():
-    url = "https://services.swpc.noaa.gov/products/noaa-scales.json"  # Replace with the actual URL
+    url = "https://services.swpc.noaa.gov/products/noaa-scales.json"  
     try:
         response = requests.get(url)
         response.raise_for_status()  # Check if the request was successful
@@ -91,7 +91,7 @@ def get_geo_mag_storm():
     return None
 
 def get_bz():
-    url = "https://services.swpc.noaa.gov/products/solar-wind/mag-2-hour.json"  # Replace with the actual URL
+    url = "https://services.swpc.noaa.gov/products/solar-wind/mag-2-hour.json"  
     try:
         response = requests.get(url)
         response.raise_for_status()  # Check if the request was successful
@@ -110,7 +110,7 @@ def get_bz():
     return None
 
 def get_bt():
-    url = "https://services.swpc.noaa.gov/products/solar-wind/mag-2-hour.json"  # Replace with the actual URL
+    url = "https://services.swpc.noaa.gov/products/solar-wind/mag-2-hour.json"  
     try:
         response = requests.get(url)
         response.raise_for_status()  # Check if the request was successful
@@ -129,7 +129,7 @@ def get_bt():
     return None
 
 def get_radio_outage():
-    url = "https://services.swpc.noaa.gov/products/noaa-scales.json"  # Replace with the actual URL
+    url = "https://services.swpc.noaa.gov/products/noaa-scales.json"  
     try:
         response = requests.get(url)
         response.raise_for_status()  # Check if the request was successful
@@ -147,7 +147,7 @@ def get_radio_outage():
     return None
 
 def get_solar_radiation():
-    url = "https://services.swpc.noaa.gov/products/noaa-scales.json"  # Replace with the actual URL
+    url = "https://services.swpc.noaa.gov/products/noaa-scales.json"  
     try:
         response = requests.get(url)
         response.raise_for_status()  # Check if the request was successful
@@ -165,7 +165,7 @@ def get_solar_radiation():
     return None
 
 def get_kp():
-    url = "https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json"  # Replace with the actual URL
+    url = "https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json"  
     try:
         response = requests.get(url)
         response.raise_for_status()  # Check if the request was successful
@@ -200,7 +200,7 @@ def get_3day_kp():
         date = None
         # finds where the highest kp is in the 3-day forecast
 
-        #Fixes bug when there is G1-5 in the forcast to prevent it from affecting the 2d array searching algorithm
+        
         for i in range(1, len(forecast)):
             forecast[i] = [value for value in forecast[i] if not value.startswith("(G")]
       
@@ -377,10 +377,10 @@ def main():
             print("Density not found.")
             exit(3)
         elif float(split_density[0]) > critical_default:
-            print(f"CRITICAL - Solar wind density is HIGH: {density} p/cm3 | WindDensity={split_density[0]};;{warning_default};{critical_default};")
+            print(f"CRITICAL - Solar wind density is HIGH: {density} p/cm3 | WindDensity={split_density[0]};{warning_default};{critical_default};;")
             exit(2)
         elif float(split_density[0]) > warning_default:
-            print(f"WARNING - Solar wind density is MEDIUM: {density} p/cm3 | WindDensity={split_density[0]};{warning_default};{critical_default};;")
+            print(f"WARNING - Solar wind density is MILD: {density} p/cm3 | WindDensity={split_density[0]};{warning_default};{critical_default};;")
             exit(1)
         else:
             print(f"OK - Solar wind density is LOW: {density} p/cm3 | WindDensity={split_density[0]};{warning_default};{critical_default};;")
@@ -404,7 +404,7 @@ def main():
             print(f"CRITICAL - Solar wind speed is HIGH: {wind_speed} km/s | WindSpeed={wind_speed};{warning_default};{critical_default};;")
             exit(2)
         elif float(wind_speed) > warning_default: 
-            print(f"WARNING - Solar wind speed is MEDIUM: {wind_speed} km/s | WindSpeed={wind_speed};{warning_default};{critical_default};;")
+            print(f"WARNING - Solar wind speed is MILD: {wind_speed} km/s | WindSpeed={wind_speed};{warning_default};{critical_default};;")
             exit(1) 
         else:
             print(f"OK - Solar wind speed is LOW: {wind_speed} km/s | WindSpeed={wind_speed};{warning_default};{critical_default};;")
@@ -419,7 +419,7 @@ def main():
             exit(2)
         elif len(m_class_flares) > 0:
             m_class_flares.sort()
-            print(f"WARNING - M-class solar flare detectedd, top flare: {m_class_flares[-1]}M | solarFlareSeverity=1;1;2;;")
+            print(f"WARNING - M-class solar flare detected, top flare: {m_class_flares[-1]}M | solarFlareSeverity=1;1;2;;")
             exit(1)
         else:
             print("OK - No moderate to severe solar flares detected | solarFlareSeverity=0;1;2;;")
@@ -575,7 +575,7 @@ def main():
             print("3-day Kp index not found.")
             exit(3)
         elif highestkp[0] >= critical_default:
-            print(f"CRITICAL - Highest Kp index in the 3-day forecast is HIGH: {highestkp[0]} on {highestkp[1]} at {highestkp[2]} | Kp={highestkp[0]};;{warning_default};{critical_default};")
+            print(f"CRITICAL - Highest Kp index in the 3-day forecast is HIGH: {highestkp[0]} on {highestkp[1]} at {highestkp[2]} | Kp={highestkp[0]};{warning_default};{critical_default};;")
             exit(2)
         elif highestkp[0] >= warning_default: 
             print(f"WARNING - Highest Kp index in the 3-day forecast is MILD: {highestkp[0]} on {highestkp[1]} at {highestkp[2]} | Kp={highestkp[0]};{warning_default};{critical_default};;")
@@ -590,10 +590,10 @@ def main():
             print("OK - No CME's detected.")
             exit(0)
         elif isDirectHit[0] == 2:
-            print(f"CRITICAL - Direct hit from a CME detected Estimated shock arrival time: {isDirectHit[1]} | CMESeverity=2;1;2;;")
+            print(f"CRITICAL - Direct hit from a CME detected estimated shock arrival time: {isDirectHit[1]} | CMESeverity=2;1;2;;")
             exit(2)
         elif isDirectHit[0] == 1:
-            print(f"WARNING - Glancing blow from a CME detected Estimated shock arrival time: {isDirectHit[1]} | CMESeverity=1;1;2;;")
+            print(f"WARNING - Glancing blow from a CME detected estimated shock arrival time: {isDirectHit[1]} | CMESeverity=1;1;2;;")
             exit(1)
         else:
             print("OK - No direct hit from any CMEs detected | CMESeverity=0;1;2;;")
@@ -615,7 +615,7 @@ def main():
             print(f"CRITICAL - Hemispheric power index for the northern hemisphere is HIGH: {HPI_N} | HPI_N={HPI_N};{warning_default};{critical_default};;")
             exit(2)
         if HPI_N > warning_default:
-            print(f"WARNING - Hemispheric power index for the northern hemisphere is MEDIUM: {HPI_N} | HPI_N={HPI_N};{warning_default};{critical_default};;")    
+            print(f"WARNING - Hemispheric power index for the northern hemisphere is MILD: {HPI_N} | HPI_N={HPI_N};{warning_default};{critical_default};;")    
             exit(1)
         else:
             print(f"OK - Hemispheric power index for the northern hemisphere is LOW: {HPI_N} | HPI_N={HPI_N};{warning_default};{critical_default};;")
@@ -636,7 +636,7 @@ def main():
             print(f"CRITICAL - Hemispheric power index for the southern hemisphere is HIGH: {HPI_S} | HPI_S={HPI_S};{warning_default};{critical_default};;")
             exit(2)
         if HPI_S > warning_default:
-            print(f"WARNING - Hemispheric power index for the southern hemisphere is MEDIUM: {HPI_S} | HPI_S={HPI_S};{warning_default};{critical_default};;")
+            print(f"WARNING - Hemispheric power index for the southern hemisphere is MILD: {HPI_S} | HPI_S={HPI_S};{warning_default};{critical_default};;")
             exit(1)
         else:
             print(f"OK - Hemispheric power index for the southern hemisphere is LOW: {HPI_S} | HPI_S={HPI_S};{warning_default};{critical_default};;")
@@ -662,14 +662,14 @@ def main():
             print(f"CRITICAL - Aurora chance at longitude {args.longitude}, latitude {args.latitude} is HIGH: {aurora_chance}% | AuroraChance={int(aurora_chance)};{warning_default};{critical_default};;")
             exit(2)
         if aurora_chance > warning_default:
-            print(f"WARNING - Aurora chance at longitude {args.longitude}, latitude {args.latitude} is MEDIUM: {aurora_chance}% | AuroraChance={int(aurora_chance)};{warning_default};{critical_default};;")  
+            print(f"WARNING - Aurora chance at longitude {args.longitude}, latitude {args.latitude} is MILD: {aurora_chance}% | AuroraChance={int(aurora_chance)};{warning_default};{critical_default};;")  
             exit(1)
         else:
             print(f"OK - Aurora chance at longitude {args.longitude}, latitude {args.latitude} is LOW: {aurora_chance}% | AuroraChance={int(aurora_chance)};{warning_default};{critical_default};;")
             exit(0)
 
     if args.version:
-        print("Version 1.0")
+        print("Version 1.0.0")
         exit(0)
 
     
