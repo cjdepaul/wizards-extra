@@ -10,9 +10,7 @@
 
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <label for="address" class="form-label form-item-required"><?= _('Address') ?> 
-                        <?= xi6_info_tooltip(_('Add the domain or IP that will be monitored here')) ?>
-                    </label>
+                    <label for="address" class="form-label form-item-required"><?= _('Address') ?> <?= xi6_info_tooltip(_('Add the domain or IP that will be monitored here')) ?> </label>
                     <div class="input-group position-relative">
                         <input type="text" name="address" id="address" value="<?= encode_form_val($address) ?>" 
                             class="form-control monitor rounded" placeholder="<?= _("Enter Host Address") ?>" required>

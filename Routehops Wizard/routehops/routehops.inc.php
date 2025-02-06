@@ -22,7 +22,7 @@ function routehops_configwizard_init() {
 		CONFIGWIZARD_COPYRIGHT => "Copyright &copy; 2025 Nagios Enterprises, LLC.",
         CONFIGWIZARD_AUTHOR => "Nagios Enterprises, LLC",
 		CONFIGWIZARD_FILTER_GROUPS => array('website', 'network'),
-		CONFIGWIZARD_REQUIRES_VERSION => 500
+		CONFIGWIZARD_REQUIRES_VERSION => 60100
     );
     register_configwizard($name, $args);
 }
@@ -52,23 +52,25 @@ function routehops_configwizard_func($mode = "", $inargs = null, &$outargs = nul
             break;
 
         case CONFIGWIZARD_MODE_VALIDATESTAGE1DATA:
-			// Get variables that were passed in 
-			$address = grab_array_var($inargs, "address", "");
-			$address = nagiosccm_replace_user_macros($address);
-			
-			// Check for errors
-			$errors = 0;
-			$errmsg = array();
-			
-			if (empty($address)) {
-				$errmsg[$errors++] = _("No address specified.");
-			}
-			
-			if ($errors > 0) {
-				$outargs[CONFIG_WIZARD_MESSAGES] = $errmsg;
-				$result = 1;
-			}
-		
+            // Get variables that were passed in 
+            $address = grab_array_var($inargs, "address", "");
+            $address = nagiosccm_replace_user_macros($address);
+            
+            // Check for errors
+            $errors = 0;
+            $errmsg = array();
+            
+            if (empty($address)) {
+                $errmsg[$errors++] = _("No address specified.");
+            } elseif (strpos($address, 'http://') !== false || strpos($address, 'https://') !== false) {
+                $errmsg[$errors++] = _("Do not include a full link, just the domain (e.g., nagios.com).");
+            }
+            
+            if ($errors > 0) {
+                $outargs[CONFIGWIZARD_ERROR_MESSAGES] = $errmsg;
+                $result = 1;
+            }
+        
             break;
 
 		case CONFIGWIZARD_MODE_GETSTAGE2HTML:

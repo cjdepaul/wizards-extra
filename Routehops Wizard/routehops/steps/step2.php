@@ -26,6 +26,9 @@
             <div class="col-sm-6">
                 <label for="warning" class="form-label"><?= _('Warning') ?> </label>
                 <div class="input-group input-group-sm position-relative">
+                    <span class="input-group-text">
+                        <i <?= xi6_title_tooltip(_('Warning hops')) ?> class="material-symbols-outlined md-warning md-18 md-400">warning</i>
+                    </span>
                     <input type="text" name="warning" id="warning" value="<?= encode_form_val($warning) ?>" class="form-control form-control-sm monitor rounded" placeholder="<?= _("Enter warning hop count") ?>">
                     <i id="warning_Alert" class="visually-hidden position-absolute top-0 start-100 translate-middle icon icon-circle color-ok icon-size-status"></i>
                 </div>
@@ -36,6 +39,9 @@
             <div class="col-sm-6">
                 <label for="critical" class="form-label"><?= _('Critical') ?> </label>
                 <div class="input-group input-group-sm position-relative">
+                    <span class="input-group-text">
+                        <i <?= xi6_title_tooltip(_('Critical hops')) ?> class="material-symbols-outlined md-critical md-18 md-400">error</i>
+                    </span>
                     <input type="text" name="critical" id="critical" value="<?= encode_form_val($critical) ?>" class="form-control form-control-sm monitor rounded" placeholder="<?= _("Enter critical hop count") ?>" >
                     <i id="critical_Alert" class="visually-hidden position-absolute top-0 start-100 translate-middle icon icon-circle color-ok icon-size-status"></i>
                 </div>
