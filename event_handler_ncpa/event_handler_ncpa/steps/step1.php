@@ -16,7 +16,7 @@
 
 		<div class="row mb-2">
 			<div class="col-sm-6">
-				<label for="hostname" class="form-label"><?= _('Host') ?> <?= xi6_info_tooltip(_('Select the host containing the service you would like to add an event handler to.')) ?></label>
+				<label for="hostname" class="form-label"><?= _('Host') ?> <?= xi6_info_tooltip(_('Select the host with the service you would like to add an event handler to.')) ?></label>
 				<div class="input-group position-relative">
 					<select name="hostname" id="hostname" class="form-control form-control-sm monitor rounded">
 						<option value=""><?= _("Select Host") ?></option>
