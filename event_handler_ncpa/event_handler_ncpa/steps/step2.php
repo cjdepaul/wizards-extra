@@ -41,7 +41,7 @@
         </div>
         <div class="row">
             <div class="col-sm-5">
-                <label for="event_handler" class="form-label form-item-required"><?= _('Event Handler') ?> <?= xi6_info_tooltip(_('The name of the event handler contained in your plugins folder. Ex. "eventhandler.sh"')) ?></label>
+                <label for="event_handler" class="form-label form-item-required"><?= _('Event Handler') ?> <?= xi6_info_tooltip(_('The name of the event handler contained in your plugins folder. Ex. eventhandler.sh')) ?></label>
                 <div class="input-group position-relative">
                     <div class="input-group input-group-sm">
                         <input type="text" id="event_handler" name="event_handler" value="<?= encode_form_val($event_handler) ?>" placeholder="<?= _("Enter event handler") ?>" class="form-control form-control-sm monitor">
