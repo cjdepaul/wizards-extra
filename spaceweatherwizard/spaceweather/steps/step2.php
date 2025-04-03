@@ -306,6 +306,39 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-sm-12">
+                <fieldset class="row g-2 mb-1 wz-fieldset align-items-center metrics">
+                    <div class="form-check col-sm-2 d-flex align-items-center">
+                        <input type="checkbox" id="MeV" class="form-check-input me-2" name="services[MeV]" <?= isset($services["MeV"]) && $services["MeV"] ? 'checked="checked"' : '' ?> onchange="updateSelectAll('metrics')">
+                        <label for="MeV" class="form-check-label bold me-2 text-nowrap"><?= _('Proton Flux') ?> <?= xi6_info_tooltip(_("Monitors the current proton flux values")) ?></label>
+                    </div>
+                    <div class="col-sm-6 offset-sm-2">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">
+                                        <i <?= xi6_title_tooltip(_('Warning Threshold (default=10)')) ?> class="material-symbols-outlined md-warning md-18 md-400">warning</i>
+                                    </span>
+                                    <input type="text" name="serviceargs[MeV][warning]" id="MeV_warning" value="<?= encode_form_val($serviceargs["MeV"]["warning"] ?? 100) ?>" class="form-control form-control-sm">
+                                    <i id="services_MeV_warning_Alert" class="visually-hidden position-absolute top-0 start-100 translate-middle icon icon-circle color-ok icon-size-status"></i>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">
+                                        <i <?= xi6_title_tooltip(_('Critical Threshold (default=10000)')) ?> class="material-symbols-outlined md-critical md-18 md-400">error</i>
+                                    </span>
+                                    <input type="text" name="serviceargs[MeV][critical]" id="MeV_critical" value="<?= encode_form_val($serviceargs["MeV"]["critical"] ?? 10000) ?>" class="form-control form-control-sm">
+                                    <i id="services_MeV_critical_Alert" class="visually-hidden position-absolute top-0 start-100 translate-middle icon icon-circle color-ok icon-size-status"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
 
         <h2 class="mt-4"><?= _('Space Weather Detection Alerts') ?></h2>
         <p><?= _('Specify which detection services you would like to monitor') ?></p>
@@ -459,7 +492,7 @@
             </div>
         </div>
 
-
+        
 
         <h2 class="mt-4"><?= _('Aurora Alerts') ?></h2>
         <p><?= _('Select where you would like to track auroras or add a custom location') ?></p>

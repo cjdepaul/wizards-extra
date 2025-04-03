@@ -1,4 +1,8 @@
+1.1.0 - 04/02/2025
+==================
+- Added ability to monitor proton flux - CJD
+
 1.0.0 - 02/03/2025
 ==================
-- Wizard Create
+- Wizard Created - CJD
 
