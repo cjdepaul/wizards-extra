@@ -719,17 +719,17 @@ def main():
         elif highest_index == 3:
             tag = "500MeV"
         if flux[highest_index] > critical_default:
-            print(f"CRITICAL - High proton flux detected. Peak flux: {flux[highest_index]} {tag} | Flux10MeV={flux[0]};{warning_default};{critical_default};; Flux50MeV={flux[1]};{warning_default};{critical_default};; Flux10MeV0={flux[2]};{warning_default};{critical_default};; Flux50MeV0={flux[3]};{warning_default};{critical_default};;")
+            print(f"CRITICAL - High proton flux detected. Peak flux: {flux[highest_index]} {tag} | Flux10MeV={flux[0]};{warning_default};{critical_default};; Flux50MeV={flux[1]};{warning_default};{critical_default};; Flux100MeV={flux[2]};{warning_default};{critical_default};; Flux500MeV={flux[3]};{warning_default};{critical_default};;")
             exit(2)
         if flux[highest_index] > warning_default:
-            print(f"WARNING - Elevated proton flux detected. Peak flux: {flux[highest_index]} {tag} | Flux10MeV={flux[0]};{warning_default};{critical_default};; Flux50MeV={flux[1]};{warning_default};{critical_default};; Flux10MeV0={flux[2]};{warning_default};{critical_default};; Flux50MeV0={flux[3]};{warning_default};{critical_default};;")
+            print(f"WARNING - Elevated proton flux detected. Peak flux: {flux[highest_index]} {tag} | Flux10MeV={flux[0]};{warning_default};{critical_default};; Flux50MeV={flux[1]};{warning_default};{critical_default};; Flux100MeV={flux[2]};{warning_default};{critical_default};; Flux500MeV={flux[3]};{warning_default};{critical_default};;")
             exit(1)
         else:   
-            print(f"OK - All proton flux values are within normal range. Peak flux: {flux[highest_index]} {tag} | Flux10MeV={flux[0]};{warning_default};{critical_default};; Flux50MeV={flux[1]};{warning_default};{critical_default};; Flux10MeV0={flux[2]};{warning_default};{critical_default};; Flux50MeV0={flux[3]};{warning_default};{critical_default};;")
+            print(f"OK - All proton flux values are within normal range. Peak flux: {flux[highest_index]} {tag} | Flux10MeV={flux[0]};{warning_default};{critical_default};; Flux50MeV={flux[1]};{warning_default};{critical_default};; Flux100MeV={flux[2]};{warning_default};{critical_default};; Flux500MeV={flux[3]};{warning_default};{critical_default};;")
             exit(0)
 
     if args.version:
-        print("Version 1.0")
+        print("Version 1.1.0")
         exit(0)
 
     
