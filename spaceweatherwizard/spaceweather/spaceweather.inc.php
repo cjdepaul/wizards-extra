@@ -13,7 +13,7 @@ function spaceweather_configwizard_init()
     $name = "spaceweather";
     $args = array(
         CONFIGWIZARD_NAME => $name,
-        CONFIGWIZARD_VERSION => "1.0.0",
+        CONFIGWIZARD_VERSION => "1.1.0",
         CONFIGWIZARD_TYPE => CONFIGWIZARD_TYPE_MONITORING,
         CONFIGWIZARD_DESCRIPTION => _("Monitor various amounts of space weather data."),
         CONFIGWIZARD_DISPLAYTITLE => _("Space Weather"),
@@ -242,7 +242,8 @@ function spaceweather_configwizard_func($mode = "", $inargs = null, &$outargs = 
                 "kp" => ["description" => "Kp Index", "command" => "check_space_weather!-k"],
                 "3day" => ["description" => "Three Day Forecast", "command" => "check_space_weather!-3d"],
                 "hpin" => ["description" => "Hemispheric Power Index North", "command" => "check_space_weather!-hpiN"],
-                "hpis" => ["description" => "Hemispheric Power Index South", "command" => "check_space_weather!-hpiS"]
+                "hpis" => ["description" => "Hemispheric Power Index South", "command" => "check_space_weather!-hpiS"],
+                "MeV" => ["description" => "Proton Flux", "command" => "check_space_weather!-MeV"],
             ];
 
             foreach ($services as $svc => $svcstate) {
