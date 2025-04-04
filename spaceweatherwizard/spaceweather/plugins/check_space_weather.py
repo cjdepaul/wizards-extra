@@ -400,7 +400,7 @@ def main():
             print("Density not found.")
             exit(3)
         elif float(split_density[0]) > critical_default:
-            print(f"CRITICAL - Solar wind density is HIGH: {density} p/cm3 | WindDensity={split_density[0]};;{warning_default};{critical_default};")
+            print(f"CRITICAL - Solar wind density is HIGH: {density} p/cm3 | WindDensity={split_density[0]};{warning_default};{critical_default};")
             exit(2)
         elif float(split_density[0]) > warning_default:
             print(f"WARNING - Solar wind density is MEDIUM: {density} p/cm3 | WindDensity={split_density[0]};{warning_default};{critical_default};;")
@@ -485,10 +485,10 @@ def main():
             print("Bz not found.")
             exit(3)
         elif float(bz) < critical_default:
-            print(f"CRITICAL - Bz is strongly South: {bz} nT | Bz={bz}{warning_default};{critical_default};;")
+            print(f"CRITICAL - Bz is strongly South: {bz} nT | Bz={bz};{warning_default};{critical_default};;")
             exit(2)
         elif float(bz) < warning_default:
-            print(f"WARNING - Bz is moderately South: {bz} nT | Bz={bz}{warning_default};{critical_default};;")
+            print(f"WARNING - Bz is moderately South: {bz} nT | Bz={bz};{warning_default};{critical_default};;")
             exit(1)
         elif float(bz) < 0:
             print(f"OK - Bz is slightly South: {bz} nT | Bz={bz};{warning_default};{critical_default};;")
@@ -598,7 +598,7 @@ def main():
             print("3-day Kp index not found.")
             exit(3)
         elif highestkp[0] >= critical_default:
-            print(f"CRITICAL - Highest Kp index in the 3-day forecast is HIGH: {highestkp[0]} on {highestkp[1]} at {highestkp[2]} | Kp={highestkp[0]};;{warning_default};{critical_default};")
+            print(f"CRITICAL - Highest Kp index in the 3-day forecast is HIGH: {highestkp[0]} on {highestkp[1]} at {highestkp[2]} | Kp={highestkp[0]};{warning_default};{critical_default};;")
             exit(2)
         elif highestkp[0] >= warning_default: 
             print(f"WARNING - Highest Kp index in the 3-day forecast is MILD: {highestkp[0]} on {highestkp[1]} at {highestkp[2]} | Kp={highestkp[0]};{warning_default};{critical_default};;")
