@@ -278,7 +278,7 @@
                 <fieldset class="row g-2 mb-1 wz-fieldset align-items-center metrics">
                     <div class="form-check col-sm-2 d-flex align-items-center">
                         <input type="checkbox" id="hpis" class="form-check-input me-2" name="services[hpis]" <?= isset($services["hpis"]) && $services["hpis"] ? 'checked="checked"' : '' ?> onchange="updateSelectAll('metrics')">
-                        <label for="hpis" class="form-check-label bold me-2 text-nowrap"><?= _('Hemispheric Power Index North') ?> <?= xi6_info_tooltip(_("Monitors the Hemispheric Power Index in the Southern Hemisphere")) ?></label>
+                        <label for="hpis" class="form-check-label bold me-2 text-nowrap"><?= _('Hemispheric Power Index South') ?> <?= xi6_info_tooltip(_("Monitors the Hemispheric Power Index in the Southern Hemisphere")) ?></label>
                     </div>
                     <div class="col-sm-6 offset-sm-2">
                         <div class="row">
